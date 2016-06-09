@@ -7,7 +7,8 @@ ENV NODE_VERSION 5.11.0
 LABEL name="NodeJS Base With Global Dependencies Image"
 LABEL usage="docker run -ti imagename npm install"
 
-RUN yum install tar gpg curl -y
+RUN yum clean all && \
+    yum install tar gpg curl -y
 
 RUN set -ex && \
     for key in \
@@ -34,5 +35,7 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
 
 # Install some global dependencies
 RUN npm install -g marked@0.3.5 pangyp@2.3.3 sockjs-client@1.0.3 karma@0.13.22 webpack-dev-server@1.14.1 webpack@1.13.0 typings@1.0.4 typescript@1.8.10 protractor@3.2.2
+
+RUN mkdir -p /code
 
 CMD ["node"]
